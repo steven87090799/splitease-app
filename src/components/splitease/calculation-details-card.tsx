@@ -30,6 +30,7 @@ import {
 import { Separator } from '@/components/ui/separator';
 import { Calculator, ArrowRight, PartyPopper } from 'lucide-react';
 import { Badge } from '../ui/badge';
+import { useState } from 'react';
 
 interface CalculationDetailsCardProps {
   expenses: Expense[];
@@ -39,10 +40,25 @@ interface CalculationDetailsCardProps {
   onSettleUp: () => void;
 }
 
+const ExpandableText = ({ text }: { text: string }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  return (
+    <span
+      className={`cursor-pointer transition-all block text-left ${isExpanded ? 'whitespace-normal break-all' : 'truncate'}`}
+      onClick={(e) => {
+        e.stopPropagation();
+        setIsExpanded(!isExpanded);
+      }}
+      title={text} // Fallback for hover
+    >
+      {text}
+    </span>
+  );
+};
+
 export function CalculationDetailsCard({ expenses, members, balances, debts, onSettleUp }: CalculationDetailsCardProps) {
   const getMemberName = (id: string) => members.find(m => m.id === id)?.name || '未知';
-
-
 
   const totalSpending = expenses.reduce((sum, exp) => sum + exp.totalAmount, 0);
 
@@ -68,10 +84,10 @@ export function CalculationDetailsCard({ expenses, members, balances, debts, onS
               const splitShares = calculateSplitShares(expense);
               return (
                 <AccordionItem value={expense.id} key={expense.id} className="bg-secondary/30 rounded-lg px-4">
-                  <AccordionTrigger>
-                    <div className="flex justify-between w-full pr-4">
-                      <span>{expense.description}</span>
-                      <span className="font-semibold">{formatCurrency(expense.totalAmount)}</span>
+                  <AccordionTrigger className="hover:no-underline py-3">
+                    <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center w-full pr-4 gap-3">
+                      <ExpandableText text={expense.description} />
+                      <span className="font-semibold shrink-0">{formatCurrency(expense.totalAmount)}</span>
                     </div>
                   </AccordionTrigger>
                   <AccordionContent className="pt-2">
