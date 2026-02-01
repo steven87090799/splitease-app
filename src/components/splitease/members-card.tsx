@@ -191,8 +191,8 @@ export function MembersCard({ members, onAddMember, onRemoveMember, isLocked, on
 
                   {/* 操作按鈕：設定為我、刪除 */}
                   <div className="flex items-center">
-                    {/* 設定為「我」按鈕（非當前使用者時顯示） */}
-                    {!isCurrentUser(member.id) && (
+                    {/* 設定為「我」按鈕（非當前使用者且未鎖定時顯示） */}
+                    {!isLocked && !isCurrentUser(member.id) && (
                       <Tooltip>
                         <TooltipTrigger asChild>
                           <Button

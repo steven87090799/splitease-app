@@ -294,7 +294,7 @@ export function GroupSidebar() {
                 <div className="w-0.5 h-2 bg-primary/20 group-hover/footer:bg-primary/80 transition-all duration-500" />
                 <span className="tracking-widest hover:text-primary transition-colors">BY STEVEN.CHANG</span>
               </div>
-              <div className="pl-2.5 opacity-50 text-[9px]">v1.2.1</div>
+              <div className="pl-2.5 opacity-50 text-[9px]">v1.3.0</div>
             </div>
           </div>
         </div>

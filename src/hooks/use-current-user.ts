@@ -7,12 +7,14 @@ interface CurrentUserContextType {
   currentUser: Member | null;
   setCurrentUser: (member: Member | null) => void;
   isCurrentUser: (memberId: string) => boolean;
+  isLoaded: boolean;
 }
 
 const CurrentUserContext = createContext<CurrentUserContextType | undefined>(undefined);
 
 export function CurrentUserProvider({ children, members, groupId }: { children: React.ReactNode; members: Member[]; groupId: string }) {
   const [currentUser, setCurrentUserState] = useState<Member | null>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   // Use group-specific localStorage key
   const storageKey = `splitease_currentUser_${groupId}`;
@@ -30,6 +32,8 @@ export function CurrentUserProvider({ children, members, groupId }: { children: 
     } catch (error) {
       console.error("Could not access localStorage.", error);
     }
+    // Mark as loaded after reading from localStorage
+    setIsLoaded(true);
   }, [members, storageKey]);
 
   const setCurrentUser = useCallback((member: Member | null) => {
@@ -51,7 +55,7 @@ export function CurrentUserProvider({ children, members, groupId }: { children: 
 
   return React.createElement(
     CurrentUserContext.Provider,
-    { value: { currentUser, setCurrentUser, isCurrentUser } },
+    { value: { currentUser, setCurrentUser, isCurrentUser, isLoaded } },
     children
   );
 }

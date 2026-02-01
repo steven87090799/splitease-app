@@ -10,14 +10,16 @@ interface UserIdentityEnforcerProps {
 }
 
 export function UserIdentityEnforcer({ isDialogOpen, onForceOpen, memberCount }: UserIdentityEnforcerProps) {
-    const { currentUser } = useCurrentUser();
+    const { currentUser, isLoaded } = useCurrentUser();
 
     useEffect(() => {
-        // Only enforce if there are members to select from
-        if (!currentUser && !isDialogOpen && memberCount > 0) {
+        // Only enforce AFTER localStorage has been loaded
+        // and if there are members to select from
+        if (isLoaded && !currentUser && !isDialogOpen && memberCount > 0) {
             onForceOpen();
         }
-    }, [currentUser, isDialogOpen, onForceOpen, memberCount]);
+    }, [currentUser, isDialogOpen, onForceOpen, memberCount, isLoaded]);
 
     return null;
 }
+
