@@ -42,7 +42,7 @@ export function SummaryCard({ expenses, members }: SummaryCardProps) {
       <CardHeader>
         <div>
           <CardTitle>費用統計</CardTitle>
-          <CardDescription>各成員的墊付金額統計。</CardDescription>
+          <CardDescription>各成員的消費分攤統計。</CardDescription>
         </div>
       </CardHeader>
       <CardContent>
@@ -73,7 +73,7 @@ export function SummaryCard({ expenses, members }: SummaryCardProps) {
                   {data.map((entry, index) => (
                     <Cell
                       key={`cell-${index}`}
-                      fill={entry.amount === maxAmount && maxAmount > 0 ? '#ef4444' : 'hsl(var(--primary))'}
+                      fill={entry.amount === 0 ? 'transparent' : (entry.amount === maxAmount && maxAmount > 0 ? '#ef4444' : 'hsl(var(--primary))')}
                     />
                   ))}
                 </Bar>
