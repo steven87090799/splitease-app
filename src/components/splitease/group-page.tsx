@@ -121,22 +121,22 @@ export function GroupPage({ groupId }: { groupId: string }) {
   /**
    * @effect 自動開啟成員對話框（新群組）
    * @description 當使用者建立新群組或開啟空群組時，自動彈出成員管理對話框引導新增成員
-   *              使用 sessionStorage 確保同一 session 內不會重複彈出
+   *              使用 localStorage 確保設定過成員後不會重複彈出
    * @dependencies [group, groupId]
    */
   useEffect(() => {
     if (!group) return;
 
-    // Use sessionStorage to track if the dialog has been shown for this group in the current session.
-    const sessionStorageKey = `splitease_dialog_opened_${groupId}`;
+    // Use localStorage to track if the dialog has been shown for this group (persists across sessions).
+    const localStorageKey = `splitease_dialog_opened_${groupId}`;
     try {
-      const hasOpened = sessionStorage.getItem(sessionStorageKey);
+      const hasOpened = localStorage.getItem(localStorageKey);
       if (hasOpened) {
         return;
       }
     } catch (e) {
-      // sessionStorage might be unavailable (e.g., in private browsing on some browsers)
-      console.warn("Could not access sessionStorage.", e);
+      // localStorage might be unavailable (e.g., in private browsing on some browsers)
+      console.warn("Could not access localStorage.", e);
     }
 
     const defaultNames = ['小黑', '佑佑', '家愷', '羿捷', '孟孟'];
@@ -147,11 +147,11 @@ export function GroupPage({ groupId }: { groupId: string }) {
       setIsMembersLocked(false);
     }
 
-    // Mark this group ID as checked in sessionStorage to prevent the dialog from re-opening.
+    // Mark this group ID as checked in localStorage to prevent the dialog from re-opening.
     try {
-      sessionStorage.setItem(sessionStorageKey, 'true');
+      localStorage.setItem(localStorageKey, 'true');
     } catch (e) {
-      console.warn("Could not write to sessionStorage.", e);
+      console.warn("Could not write to localStorage.", e);
     }
   }, [group, groupId]);
 

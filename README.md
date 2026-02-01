@@ -275,4 +275,4 @@ npm test  # 執行所有測試
 
 **Maintainer**: Steven  
 **Repository**: [github.com/steven87090799/splitease-app](https://github.com/steven87090799/splitease-app)  
-**Version**: 1.3.0 (Identity Persistence & Lock Control)
+**Version**: 1.3.1 (Dialog Persistence Fix)
