@@ -4,8 +4,6 @@
 
 應用程式基於 **Next.js** 和 **Firebase** 構建，並部署於 **Cloudflare Pages**，提供即時的資料同步與流暢的使用者體驗。
 
-🔗 **線上體驗**: [splitease.zhangjiakai.com](https://splitease.zhangjiakai.com)
-
 ---
 
 ## ✨ 功能亮點 (Key Features)
