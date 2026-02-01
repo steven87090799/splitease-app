@@ -11,33 +11,39 @@ interface CurrentUserContextType {
 
 const CurrentUserContext = createContext<CurrentUserContextType | undefined>(undefined);
 
-export function CurrentUserProvider({ children, members }: { children: React.ReactNode; members: Member[] }) {
+export function CurrentUserProvider({ children, members, groupId }: { children: React.ReactNode; members: Member[]; groupId: string }) {
   const [currentUser, setCurrentUserState] = useState<Member | null>(null);
+
+  // Use group-specific localStorage key
+  const storageKey = `splitease_currentUser_${groupId}`;
 
   useEffect(() => {
     try {
-      const storedUserId = localStorage.getItem('splitease_currentUser');
+      const storedUserId = localStorage.getItem(storageKey);
       if (storedUserId) {
         const user = members.find(m => m.id === storedUserId) || null;
         setCurrentUserState(user);
+      } else {
+        // Reset if no stored user for this group
+        setCurrentUserState(null);
       }
     } catch (error) {
       console.error("Could not access localStorage.", error);
     }
-  }, [members]);
+  }, [members, storageKey]);
 
   const setCurrentUser = useCallback((member: Member | null) => {
     setCurrentUserState(member);
     try {
       if (member) {
-        localStorage.setItem('splitease_currentUser', member.id);
+        localStorage.setItem(storageKey, member.id);
       } else {
-        localStorage.removeItem('splitease_currentUser');
+        localStorage.removeItem(storageKey);
       }
     } catch (error) {
       console.error("Could not access localStorage.", error);
     }
-  }, []);
+  }, [storageKey]);
 
   const isCurrentUser = useCallback((memberId: string) => {
     return currentUser?.id === memberId;
