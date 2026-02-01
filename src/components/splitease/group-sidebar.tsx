@@ -265,40 +265,40 @@ export function GroupSidebar() {
           </AlertDialogContent>
         </AlertDialog>
       </SidebarContent>
-      {groups.length > 0 && (
-        <SidebarFooter className="border-t-0 border-none pt-4">
+      <SidebarFooter className="border-t-0 border-none pt-4">
+        {groups.length > 0 && (
           <ClearHistoryDialog
             open={isDialogOpen}
             onOpenChange={setIsDialogOpen}
             onClear={handleClearHistory}
           />
+        )}
 
-          <div className="w-full group/footer cursor-default mb-2">
-            {/* Tech Data Stream Separator */}
-            <div className="relative h-[2px] w-full my-3 overflow-hidden">
-              <div className="absolute inset-0 bg-primary/10" />
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/40 to-transparent translate-x-[-100%] group-hover/footer:translate-x-[100%] transition-transform duration-1000 ease-in-out" />
+        <div className="w-full group/footer cursor-default mb-2">
+          {/* Tech Data Stream Separator */}
+          <div className="relative h-[2px] w-full my-3 overflow-hidden">
+            <div className="absolute inset-0 bg-primary/10" />
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/40 to-transparent translate-x-[-100%] group-hover/footer:translate-x-[100%] transition-transform duration-1000 ease-in-out" />
+          </div>
+
+          <div className="flex flex-col gap-1 px-1">
+            {/* Tech Label */}
+            <div className="flex items-center justify-between text-[9px] font-mono tracking-[0.2em] text-primary/30 uppercase group-hover/footer:text-primary/70 transition-colors duration-500">
+              <span>Core.Sys</span>
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500/20 group-hover/footer:bg-emerald-500/80 group-hover/footer:shadow-[0_0_5px_rgba(16,185,129,0.5)] transition-all duration-500" />
             </div>
 
-            <div className="flex flex-col gap-1 px-1">
-              {/* Tech Label */}
-              <div className="flex items-center justify-between text-[9px] font-mono tracking-[0.2em] text-primary/30 uppercase group-hover/footer:text-primary/70 transition-colors duration-500">
-                <span>Core.Sys</span>
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500/20 group-hover/footer:bg-emerald-500/80 group-hover/footer:shadow-[0_0_5px_rgba(16,185,129,0.5)] transition-all duration-500" />
+            {/* Signature Block */}
+            <div className="flex flex-col text-[10px] font-mono text-muted-foreground/40 group-hover/footer:text-primary/60 transition-colors duration-500">
+              <div className="flex items-center gap-2">
+                <div className="w-0.5 h-2 bg-primary/20 group-hover/footer:bg-primary/80 transition-all duration-500" />
+                <span className="tracking-widest hover:text-primary transition-colors">BY STEVEN.CHANG</span>
               </div>
-
-              {/* Signature Block */}
-              <div className="flex flex-col text-[10px] font-mono text-muted-foreground/40 group-hover/footer:text-primary/60 transition-colors duration-500">
-                <div className="flex items-center gap-2">
-                  <div className="w-0.5 h-2 bg-primary/20 group-hover/footer:bg-primary/80 transition-all duration-500" />
-                  <span className="tracking-widest hover:text-primary transition-colors">BY STEVEN.CHANG</span>
-                </div>
-                <div className="pl-2.5 opacity-50 text-[9px]">v1.1.0</div>
-              </div>
+              <div className="pl-2.5 opacity-50 text-[9px]">v1.1.0</div>
             </div>
           </div>
-        </SidebarFooter>
-      )}
+        </div>
+      </SidebarFooter>
     </Sidebar>
   );
 }
