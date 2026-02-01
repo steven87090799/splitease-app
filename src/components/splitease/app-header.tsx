@@ -152,7 +152,6 @@ export function AppHeader({ groupName, onUpdateName, onOpenMembers }: AppHeaderP
                             >
                                 <Users className="h-4 w-4" />
                                 <span className="font-medium hidden sm:inline">成員</span>
-                                <span className="font-medium sm:hidden">成員</span>
                             </Button>
                         </div>
                     </div>
