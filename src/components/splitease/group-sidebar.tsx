@@ -35,6 +35,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
+import { ClearHistoryDialog } from '@/components/splitease/clear-history-dialog';
 import { useToast } from '@/hooks/use-toast';
 
 export function GroupSidebar() {
@@ -42,27 +43,17 @@ export function GroupSidebar() {
   const pathname = usePathname();
   const { setOpenMobile } = useSidebar();
   const router = useRouter();
-  const [confirmationText, setConfirmationText] = useState('');
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [deleteGroupDialog, setDeleteGroupDialog] = useState<{ isOpen: boolean; groupId: string; groupName: string }>({ isOpen: false, groupId: '', groupName: '' });
   const [deleteConfirmText, setDeleteConfirmText] = useState('');
   const [deleteFromCloud, setDeleteFromCloud] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
-  const confirmInputRef = useRef<HTMLInputElement>(null);
   const deleteInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
   const firestore = useFirestore();
 
   // Focus input when dialog opens
-  useEffect(() => {
-    if (isDialogOpen) {
-      // Use a longer delay to ensure dialog animation completes
-      const timer = setTimeout(() => {
-        confirmInputRef.current?.focus();
-      }, 300);
-      return () => clearTimeout(timer);
-    }
-  }, [isDialogOpen]);
+  // Focus logic removed to let Radix UI handle it naturally
 
   const handleNavigation = (href: string) => {
     router.push(href);
@@ -71,7 +62,6 @@ export function GroupSidebar() {
 
   const handleClearHistory = () => {
     clearHistory();
-    setConfirmationText('');
     setIsDialogOpen(false);
   };
 
@@ -276,43 +266,37 @@ export function GroupSidebar() {
         </AlertDialog>
       </SidebarContent>
       {groups.length > 0 && (
-        <SidebarFooter>
-          <AlertDialog open={isDialogOpen} onOpenChange={(open) => {
-            setIsDialogOpen(open);
-            if (!open) setConfirmationText('');
-          }}>
-            <AlertDialogTrigger asChild>
-              <Button variant="ghost" className="w-full text-muted-foreground hover:text-destructive hover:bg-destructive/10 justify-start">
-                <Trash2 className="mr-2 h-4 w-4" />
-                清除所有紀錄
-              </Button>
-            </AlertDialogTrigger>
-            <AlertDialogContent onOpenAutoFocus={(e) => e.preventDefault()}>
-              <AlertDialogHeader>
-                <AlertDialogTitle>確定要清除所有群組紀錄嗎？</AlertDialogTitle>
-                <AlertDialogDescription>
-                  此操作將會清除您在本機上的所有群組歷史紀錄，但**不會**刪除雲端上的群組本身。請在下方輸入 <strong className="text-foreground">delete</strong> 以確認。
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <Input
-                ref={confirmInputRef}
-                value={confirmationText}
-                onChange={(e) => setConfirmationText(e.target.value)}
-                onKeyDown={(e) => e.stopPropagation()}
-                placeholder="delete"
-              />
-              <AlertDialogFooter>
-                <AlertDialogCancel>取消</AlertDialogCancel>
-                <AlertDialogAction
-                  disabled={confirmationText !== 'delete'}
-                  className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-                  onClick={handleClearHistory}
-                >
-                  確定清除
-                </AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
+        <SidebarFooter className="border-t-0 border-none pt-4">
+          <ClearHistoryDialog
+            open={isDialogOpen}
+            onOpenChange={setIsDialogOpen}
+            onClear={handleClearHistory}
+          />
+
+          <div className="w-full group/footer cursor-default mb-2">
+            {/* Tech Data Stream Separator */}
+            <div className="relative h-[2px] w-full my-3 overflow-hidden">
+              <div className="absolute inset-0 bg-primary/10" />
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/40 to-transparent translate-x-[-100%] group-hover/footer:translate-x-[100%] transition-transform duration-1000 ease-in-out" />
+            </div>
+
+            <div className="flex flex-col gap-1 px-1">
+              {/* Tech Label */}
+              <div className="flex items-center justify-between text-[9px] font-mono tracking-[0.2em] text-primary/30 uppercase group-hover/footer:text-primary/70 transition-colors duration-500">
+                <span>Core.Sys</span>
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500/20 group-hover/footer:bg-emerald-500/80 group-hover/footer:shadow-[0_0_5px_rgba(16,185,129,0.5)] transition-all duration-500" />
+              </div>
+
+              {/* Signature Block */}
+              <div className="flex flex-col text-[10px] font-mono text-muted-foreground/40 group-hover/footer:text-primary/60 transition-colors duration-500">
+                <div className="flex items-center gap-2">
+                  <div className="w-0.5 h-2 bg-primary/20 group-hover/footer:bg-primary/80 transition-all duration-500" />
+                  <span className="tracking-widest hover:text-primary transition-colors">BY STEVEN.CHANG</span>
+                </div>
+                <div className="pl-2.5 opacity-50 text-[9px]">v1.1.0</div>
+              </div>
+            </div>
+          </div>
         </SidebarFooter>
       )}
     </Sidebar>
