@@ -1,5 +1,7 @@
 import { GroupPage } from '@/components/splitease/group-page';
 
+export const runtime = 'edge';
+
 export default async function GroupDetailsPage({
   params,
 }: {
