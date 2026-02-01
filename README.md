@@ -66,36 +66,36 @@
 │   ├── components/               # React 元件
 │   │   ├── icons.tsx             # 自訂圖示元件
 │   │   ├── ui/                   # (ShadCN) 通用基礎 UI 元件
-│   │   │   ├── accordion.tsx
-│   │   │   ├── alert-dialog.tsx
-│   │   │   ├── avatar.tsx
-│   │   │   ├── badge.tsx
-│   │   │   ├── button.tsx
-│   │   │   ├── card.tsx
-│   │   │   ├── checkbox.tsx
-│   │   │   ├── collapsible.tsx
-│   │   │   ├── command.tsx
-│   │   │   ├── dialog.tsx
-│   │   │   ├── dropdown-menu.tsx
-│   │   │   ├── epic-submit-button.tsx
-│   │   │   ├── form.tsx
-│   │   │   ├── input.tsx
-│   │   │   ├── label.tsx
-│   │   │   ├── popover.tsx
-│   │   │   ├── progress.tsx
-│   │   │   ├── radio-group.tsx
-│   │   │   ├── scroll-area.tsx
-│   │   │   ├── select.tsx
-│   │   │   ├── separator.tsx
-│   │   │   ├── sheet.tsx
-│   │   │   ├── sidebar.tsx
-│   │   │   ├── skeleton.tsx
-│   │   │   ├── slider.tsx
-│   │   │   ├── switch.tsx
-│   │   │   ├── tabs.tsx
-│   │   │   ├── toast.tsx
-│   │   │   ├── toaster.tsx
-│   │   │   └── tooltip.tsx
+│   │   │   ├── accordion.tsx        # 手風琴摺疊面板
+│   │   │   ├── alert-dialog.tsx     # 警告對話框 (確認/取消操作)
+│   │   │   ├── avatar.tsx           # 使用者頭像元件
+│   │   │   ├── badge.tsx            # 標籤徽章 (狀態標示)
+│   │   │   ├── button.tsx           # 按鈕元件
+│   │   │   ├── card.tsx             # 卡片容器
+│   │   │   ├── checkbox.tsx         # 勾選框
+│   │   │   ├── collapsible.tsx      # 可折疊區塊
+│   │   │   ├── command.tsx          # 命令選單 (搜尋選擇)
+│   │   │   ├── dialog.tsx           # 對話框/彈窗
+│   │   │   ├── dropdown-menu.tsx    # 下拉式選單
+│   │   │   ├── epic-submit-button.tsx # 動畫提交按鈕
+│   │   │   ├── form.tsx             # 表單元件 (驗證整合)
+│   │   │   ├── input.tsx            # 輸入框
+│   │   │   ├── label.tsx            # 標籤文字
+│   │   │   ├── popover.tsx          # 彈出氣泡框
+│   │   │   ├── progress.tsx         # 進度條
+│   │   │   ├── radio-group.tsx      # 單選按鈕群組
+│   │   │   ├── scroll-area.tsx      # 自訂滾動區域
+│   │   │   ├── select.tsx           # 下拉選擇器
+│   │   │   ├── separator.tsx        # 分隔線
+│   │   │   ├── sheet.tsx            # 側邊滑出面板
+│   │   │   ├── sidebar.tsx          # 側邊欄框架
+│   │   │   ├── skeleton.tsx         # 載入骨架屏
+│   │   │   ├── slider.tsx           # 滑桿選擇器
+│   │   │   ├── switch.tsx           # 開關切換
+│   │   │   ├── tabs.tsx             # 分頁標籤
+│   │   │   ├── toast.tsx            # 通知訊息元件
+│   │   │   ├── toaster.tsx          # 通知訊息容器
+│   │   │   └── tooltip.tsx          # 提示工具氣泡
 │   │   │
 │   │   └── splitease/            # 專為此應用設計的業務邏輯元件
 │   │       ├── group-page.tsx              # 群組頁面核心 (State Management)
