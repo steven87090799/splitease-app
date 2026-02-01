@@ -97,6 +97,7 @@ export type Expense = {
   splitMethod: SplitMethod;
   splitDetails: SplitDetail[];
   date: string;
+  createdBy?: string;
 };
 
 // ============================================================================

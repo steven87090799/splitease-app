@@ -9,6 +9,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '../ui/badge';
 import { List } from 'lucide-react';
+import { useState } from 'react';
 
 interface ExpensesListCardProps {
   expenses: Expense[];
@@ -16,10 +17,28 @@ interface ExpensesListCardProps {
 }
 
 const splitMethodText: Record<SplitMethod, string> = {
-    equally: '均分',
-    amount: '指定金額',
-    percentage: '按百分比',
-    shares: '按份額',
+  equally: '均分',
+  amount: '指定金額',
+  percentage: '按百分比',
+  shares: '按份額',
+};
+
+const ExpandableText = ({ text, suffix }: { text: string; suffix?: React.ReactNode }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  return (
+    <span
+      className={`cursor-pointer transition-all block text-left font-semibold ${isExpanded ? 'whitespace-normal break-all' : 'truncate'}`}
+      onClick={(e) => {
+        e.stopPropagation();
+        setIsExpanded(!isExpanded);
+      }}
+      title={text}
+    >
+      {text}
+      {suffix}
+    </span>
+  );
 };
 
 export function ExpensesListCard({ expenses, members }: ExpensesListCardProps) {
@@ -41,13 +60,20 @@ export function ExpensesListCard({ expenses, members }: ExpensesListCardProps) {
           <Accordion type="single" collapsible className="w-full">
             {expenses.map(expense => (
               <AccordionItem value={expense.id} key={expense.id}>
-                <AccordionTrigger>
-                  <div className="flex justify-between w-full pr-4">
-                    <div className="flex flex-col text-left">
-                       <span className="font-semibold">{expense.description}</span>
-                       <span className="text-sm text-muted-foreground">{new Date(expense.date).toLocaleDateString('zh-TW')}</span>
+                <AccordionTrigger className="hover:no-underline">
+                  <div className="grid grid-cols-[minmax(0,1fr)_auto] items-start w-full pr-4 gap-3">
+                    <div className="flex flex-col text-left min-w-0">
+                      <ExpandableText text={expense.description} />
+                      <span className="text-sm text-muted-foreground">
+                        {new Date(expense.date).toLocaleDateString('zh-TW')}
+                        {expense.createdBy && (
+                          <span className="ml-2 text-xs">
+                            (由 {getMemberName(expense.createdBy)} 新增)
+                          </span>
+                        )}
+                      </span>
                     </div>
-                    <span className="font-headline font-semibold text-lg">
+                    <span className="font-headline font-semibold text-lg shrink-0">
                       {formatCurrency(expense.totalAmount)}
                     </span>
                   </div>
@@ -66,7 +92,7 @@ export function ExpensesListCard({ expenses, members }: ExpensesListCardProps) {
                         .join(', ')}
                     </p>
                     <div className='flex items-center gap-2'>
-                       <strong>分攤方式：</strong> <Badge variant="secondary">{splitMethodText[expense.splitMethod]}</Badge>
+                      <strong>分攤方式：</strong> <Badge variant="secondary">{splitMethodText[expense.splitMethod]}</Badge>
                     </div>
                   </div>
                 </AccordionContent>

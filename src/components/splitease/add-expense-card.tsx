@@ -157,7 +157,8 @@ export function AddExpenseCard({ members, onAddExpense, isLocked }: AddExpenseCa
 
     const submissionData = {
       ...data,
-      splitDetails: data.splitDetails.filter(d => d.selected)
+      splitDetails: data.splitDetails.filter(d => d.selected),
+      createdBy: currentUser?.id
     }
     onAddExpense(submissionData);
     form.reset({

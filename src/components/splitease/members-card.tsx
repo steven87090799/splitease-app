@@ -140,6 +140,16 @@ export function MembersCard({ members, onAddMember, onRemoveMember, isLocked, on
 
         {/* 卡片內容區 */}
         <CardContent>
+          {/* 未選擇身份時的提示 */}
+          {!isCurrentUser(members.find(m => isCurrentUser(m.id))?.id || '') && (
+            <div className="mb-4 p-3 bg-primary/10 border border-primary/20 rounded-lg flex items-start gap-3 animate-pulse">
+              <UserCircle className="h-5 w-5 text-primary shrink-0 mt-0.5" />
+              <div className="text-sm text-primary font-medium">
+                請點擊您名字旁的 <UserCircle className="inline-block h-4 w-4 mx-1" /> 按鈕，確認您的身份。
+              </div>
+            </div>
+          )}
+
           {/* 新增成員輸入區 */}
           <div className="flex gap-2 mb-4">
             <Input
@@ -181,14 +191,14 @@ export function MembersCard({ members, onAddMember, onRemoveMember, isLocked, on
 
                   {/* 操作按鈕：設定為我、刪除 */}
                   <div className="flex items-center">
-                    {/* 設定為「我」按鈕（僅解鎖且非當前使用者時顯示） */}
-                    {!isLocked && !isCurrentUser(member.id) && (
+                    {/* 設定為「我」按鈕（非當前使用者時顯示） */}
+                    {!isCurrentUser(member.id) && (
                       <Tooltip>
                         <TooltipTrigger asChild>
                           <Button
                             variant="ghost"
                             size="icon"
-                            className="h-8 w-8"
+                            className={`h-8 w-8 ${!isCurrentUser(members.find(m => isCurrentUser(m.id))?.id || '') ? 'text-primary animate-bounce' : 'text-muted-foreground'}`}
                             aria-label={`設定 ${member.name} 為我`}
                             onClick={() => setCurrentUser(member)}
                           >

@@ -3,7 +3,7 @@
 import { useState, useMemo, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useFirestore, useDoc } from '@/firebase';
-import { doc, updateDoc, serverTimestamp, deleteDoc } from 'firebase/firestore';
+import { doc, updateDoc, serverTimestamp, deleteDoc, DocumentReference } from 'firebase/firestore';
 import type { Member, Expense, Debt, Settlement, Group } from '@/lib/types';
 import type { ExpenseFormData } from './add-expense-card';
 import { AppHeader } from './app-header';
@@ -25,6 +25,7 @@ import { AlertTriangle } from 'lucide-react';
 import { CurrentUserProvider } from '@/hooks/use-current-user';
 import { useGroupHistory } from '@/hooks/use-group-history';
 import { CalculationDetailsCard } from './calculation-details-card';
+import { UserIdentityEnforcer } from './user-identity-enforcer';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -82,7 +83,7 @@ export function GroupPage({ groupId }: { groupId: string }) {
    * @description 訂閱 Firestore 群組文件，自動同步資料變更
    * @returns {object} 包含 data（群組資料）、error（錯誤）、loading（載入中）
    */
-  const { data: group, error, loading } = useDoc<Group>(groupRef);
+  const { data: group, error, loading } = useDoc<Group>(groupRef as DocumentReference<Group> | null);
 
   // ========== 本地 UI 狀態 ==========
   /** 成員列表是否鎖定（鎖定時無法新增/刪除成員） */
@@ -574,6 +575,11 @@ export function GroupPage({ groupId }: { groupId: string }) {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+      <UserIdentityEnforcer
+        isDialogOpen={isMemberDialogOpen}
+        onForceOpen={() => setIsMemberDialogOpen(true)}
+        memberCount={group.members.length}
+      />
     </CurrentUserProvider>
   );
 }

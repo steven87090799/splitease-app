@@ -1,4 +1,4 @@
-import type {Config} from 'tailwindcss';
+import type { Config } from 'tailwindcss';
 
 export default {
   darkMode: ['class'],
@@ -89,12 +89,12 @@ export default {
           },
         },
         'pulse-subtle': {
-          '0%, 100%': { transform: 'scale(1)', opacity: 1 },
-          '50%': { transform: 'scale(1.25)', opacity: 0.7 },
+          '0%, 100%': { transform: 'scale(1)', opacity: '1' },
+          '50%': { transform: 'scale(1.25)', opacity: '0.7' },
         },
         'pulse-strong': {
-          '0%, 100%': { transform: 'scale(1)', opacity: 1 },
-          '50%': { transform: 'scale(1.5)', opacity: 0.7 },
+          '0%, 100%': { transform: 'scale(1)', opacity: '1' },
+          '50%': { transform: 'scale(1.5)', opacity: '0.7' },
         }
       },
       animation: {
